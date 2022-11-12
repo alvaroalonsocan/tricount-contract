@@ -23,7 +23,7 @@ contract Auction {
     }
 
     function addAmount(int amount) public {
-        require(adressExistsInBalance(), "Address does no exists in balances");
+        require(adressExistsInBalance(), "Address does not exists in balances");
         addAmountToAccount(msg.sender, amount);
         int amountToDiscount = amount / (int(adresses.length) - 1);
         for (uint i = 0; i < adresses.length; i++) {
