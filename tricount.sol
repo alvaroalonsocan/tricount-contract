@@ -16,7 +16,6 @@ contract Auction {
 
     mapping(address => Balance) public balances;
     address[] adresses;
-    event Messages(string _message);
     event insertedAdresses(address);
     event insertedAdressesBalances(address,int);
 
@@ -90,7 +89,11 @@ contract Auction {
             emit insertedAdressesBalances(adresses[i],balances[adresses[i]].amount);
         }
     }
+
+    //TODO fixear constructor de forma que reciba el numero de users que queremos introducir
+    //Crear funciones de addUser y deleteUser
     
 }
 
 //["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"]
+//50,[["0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2",10],["0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db",40]]
