@@ -9,6 +9,11 @@ contract Auction {
         bool exists;
     }
 
+    struct BalanceToDiscount {
+        address addressToDiscount;
+        int amountToDiscount;
+    }
+
     mapping(address => Balance) public balances;
     address[] adresses;
     event Messages(string _message);
@@ -22,9 +27,34 @@ contract Auction {
         }
     }
 
-    function addAmount(int amount) public {
+    function addAmount(int amount, BalanceToDiscount[] memory balancesToDiscount) public {
         require(adressExistsInBalance(), "Address does not exists in balances");
+        require(amountsMatchWithTotal(amount, balancesToDiscount), "Amounts to discount does not match with the total one");
         addAmountToAccount(msg.sender, amount);
+        if (balancesToDiscount.length != 0) {
+            discountToDefinedBalances(balancesToDiscount);
+        } else {
+            discountToAllBalances(amount);
+        }
+        
+    }
+
+    function adressExistsInBalance() public view returns(bool){
+        return balances[msg.sender].exists;
+    }
+
+    function amountsMatchWithTotal(int totalAmount, BalanceToDiscount[] memory balancesToDiscount) private pure returns(bool) {
+        if (balancesToDiscount.length == 0) {
+            return true;
+        }
+        int totalAmountsToDiscount = 0;
+        for (uint i = 0; i < balancesToDiscount.length; i++) {
+            totalAmountsToDiscount += balancesToDiscount[i].amountToDiscount;
+        }
+        return totalAmount == totalAmountsToDiscount;
+    }
+
+    function discountToAllBalances(int amount) private {
         int amountToDiscount = amount / (int(adresses.length) - 1);
         for (uint i = 0; i < adresses.length; i++) {
             if (adresses[i] != msg.sender) {
@@ -33,8 +63,12 @@ contract Auction {
         }
     }
 
-    function adressExistsInBalance() public view returns(bool){
-        return balances[msg.sender].exists;
+    function discountToDefinedBalances(BalanceToDiscount[] memory balancesToDiscount) private {
+        for (uint i = 0; i < balancesToDiscount.length; i++) {
+            if (adresses[i] != msg.sender) {
+                discountAmountToAccount(balancesToDiscount[i].addressToDiscount, balancesToDiscount[i].amountToDiscount);
+            }
+        }
     }
 
     function addAmountToAccount(address expectedAddress, int amount) private {
@@ -43,7 +77,7 @@ contract Auction {
 
     function discountAmountToAccount(address expectedAddress, int amount) private {
         balances[expectedAddress].amount = balances[expectedAddress].amount - amount;
-    } 
+    }
 
     function getAdresses() public {
         for (uint i = 0; i < adresses.length; i++) {
@@ -59,4 +93,4 @@ contract Auction {
     
 }
 
-//["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2"]
+//["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"]
