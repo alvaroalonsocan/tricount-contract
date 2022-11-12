@@ -9,7 +9,7 @@
 				"inputs": [
 					{
 						"internalType": "address[]",
-						"name": "addresses_",
+						"name": "adresses_",
 						"type": "address[]"
 					}
 				],
@@ -34,18 +34,31 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "string",
-						"name": "",
-						"type": "string"
-					},
-					{
-						"indexed": false,
 						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
 				],
 				"name": "insertedAdresses",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"name": "insertedAdressesBalances",
 				"type": "event"
 			},
 			{
@@ -62,6 +75,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "adressExistsInBalance",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -73,8 +99,13 @@
 				"outputs": [
 					{
 						"internalType": "int256",
-						"name": "",
+						"name": "amount",
 						"type": "int256"
+					},
+					{
+						"internalType": "bool",
+						"name": "exists",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -123,11 +154,11 @@
 	},
 	"sources": {
 		"tricount.sol": {
-			"keccak256": "0x70a20634508b6a6f5d133c704a3820a5981e0e289ef44c62407e33edb9cde94a",
+			"keccak256": "0x63d590fd2e4ac897e19ecfe82497d2938af9f4869fd10eeaade517ec343316b0",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://96b1725e34b9f38a9b286babe7006e8e78fa0020e27ac5da9419bf7e7bfd267f",
-				"dweb:/ipfs/QmfK2aQk48i2nEzrcb2T81rjXfcctuwUbngop9eJew1fyZ"
+				"bzz-raw://47a3ba90b07be2cdfa4076198bc2837854372b8db7802896cf3abb85895b7138",
+				"dweb:/ipfs/QmdvPGFuGZ4PwGu1aMybKNbYPJuHhFUG8yBrrtM7KiNn4U"
 			]
 		}
 	},
